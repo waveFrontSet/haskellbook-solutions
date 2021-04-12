@@ -35,7 +35,4 @@ catMaybes = foldr f []
 -- 6.
 flipMaybe :: [Maybe a] -> Maybe [a]
 flipMaybe xs | any isNothing xs = Nothing
-             | otherwise        = Just (foldr f [] xs)
- where
-  f (Just x) acc = x : acc
-  f Nothing  acc = acc
+             | otherwise        = Just (catMaybes xs)
