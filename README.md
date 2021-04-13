@@ -4,4 +4,13 @@ These are just my solutions to the programming exercises from the book [Haskell 
 
 ## Setup
 
-If you want to examine the solutions, you need to install the [Glasgow Haskell Compiler (GHC)](https://www.haskell.org/ghc/). On macs, a simple `brew install ghc` should suffice.
+If you want to examine the solutions, you need to install `stack`. On macs, a simple `brew install stack` should suffice. Afterwards, you can build the project and install dependencies by executing `stack build`.
+
+### Trying out solutions
+
+To fire up `ghci`, execute `stack ghci` inside the project folder. You can then load functions from the source files by using
+
+```
+:load path/to/haskell.hs
+```
+
