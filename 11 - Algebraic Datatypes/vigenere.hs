@@ -40,3 +40,13 @@ vigenere key xs = intercalate " " $ shiftByOffsetCycle offsetCycle (words xs)
 unvigenere :: Keyword -> String -> String
 unvigenere key = vigenere negatedKey
   where negatedKey = map (fromIndex . (`mod` 26) . (26 -) . alphabetIndex) key
+
+-- Chapter 13
+main :: IO ()
+main = do
+  putStrLn "Enter keyword:"
+  keyword <- getLine
+  putStrLn "Enter text to be encoded:"
+  text <- getLine
+  let encodedText = vigenere keyword $ map (toLower) text
+  putStrLn encodedText

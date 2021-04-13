@@ -1,5 +1,6 @@
 module Cipher where
 import           Data.Char
+import           Data.List                      ( intercalate )
 
 base :: Int
 base = ord 'a'
@@ -21,3 +22,17 @@ caesar i = map (shift i)
 
 unCaesar :: Int -> String -> String
 unCaesar i = caesar (-i)
+
+-- Chapter 13
+main :: IO ()
+main = do
+  putStrLn "Enter offset:"
+  offsetStr <- getLine
+  let offsetInt :: Int
+      offsetInt = read offsetStr
+  putStrLn "Enter text to be encoded:"
+  text <- getLine
+  let splitIntoWords = words . map (toLower)
+      encodedText =
+        intercalate " " $ map (caesar offsetInt) $ splitIntoWords text
+  putStrLn encodedText
