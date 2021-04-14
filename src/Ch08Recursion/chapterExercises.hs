@@ -1,4 +1,4 @@
-module ChapterExercises where
+module Ch08Recursion.ChapterExercises where
 
 import           Data.List                      ( intersperse )
 

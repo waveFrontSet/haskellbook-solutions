@@ -1,11 +1,8 @@
 module MultTestSpec where
 
 
+import           Ch08Recursion.ChapterExercises ( recurseMult )
 import           Test.Hspec
-
-recurseMult :: (Integral a) => a -> a -> a
-recurseMult 0 _ = 0
-recurseMult n m = m + recurseMult (n - 1) m
 
 
 main :: IO ()
