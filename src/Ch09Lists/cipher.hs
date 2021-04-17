@@ -1,6 +1,5 @@
-module Cipher where
+module Ch09Lists.Cipher where
 import           Data.Char
-import           Data.List                      ( intercalate )
 
 base :: Int
 base = ord 'a'
@@ -18,7 +17,10 @@ shift offset c = fromIndex (charIndex' `mod` 26)
   charIndex' = if charIndex < 0 then charIndex + 26 else charIndex
 
 caesar :: Int -> String -> String
-caesar i = map (shift i)
+caesar i = map (shiftNonSpaceChars)
+ where
+  shiftNonSpaceChars c | c == ' '  = ' '
+                       | otherwise = shift i c
 
 unCaesar :: Int -> String -> String
 unCaesar i = caesar (-i)
@@ -28,11 +30,7 @@ main :: IO ()
 main = do
   putStrLn "Enter offset:"
   offsetStr <- getLine
-  let offsetInt :: Int
-      offsetInt = read offsetStr
   putStrLn "Enter text to be encoded:"
   text <- getLine
-  let splitIntoWords = words . map (toLower)
-      encodedText =
-        intercalate " " $ map (caesar offsetInt) $ splitIntoWords text
+  let encodedText = caesar (read offsetStr) text
   putStrLn encodedText

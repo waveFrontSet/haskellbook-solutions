@@ -1,6 +1,5 @@
-module Vigenere where
+module Ch11AlgebraicDatatypes.Vigenere where
 import           Data.Char
-import           Data.List
 
 -- Reusage of the Caesar cipher helper functions
 base :: Int
@@ -22,16 +21,20 @@ shift offset c = fromIndex (charIndex' `mod` 26)
 type Keyword = String
 
 mapToOffsetCycle :: Keyword -> [Int]
-mapToOffsetCycle = concat . repeat . map alphabetIndex
+mapToOffsetCycle keyword
+  | keyword == "" = repeat 0
+  | otherwise     = concat $ repeat $ map alphabetIndex keyword
 
-shiftByOffsetCycle :: [Int] -> [String] -> [String]
-shiftByOffsetCycle offsetCycle = reverse . foldl f []
+shiftByOffsetCycle :: [Int] -> String -> String
+shiftByOffsetCycle offsetCycle = reverse . foldl f ""
  where
-  f xs s = (zipWith shift shiftedOffsetCycle s) : xs
-    where shiftedOffsetCycle = drop (length $ concat xs) offsetCycle
+  f :: String -> Char -> String
+  f xs c | c == ' '  = ' ' : xs
+         | otherwise = shift index c : xs
+    where index = head $ drop (length $ filter (/= ' ') xs) offsetCycle
 
 vigenere :: Keyword -> String -> String
-vigenere key xs = intercalate " " $ shiftByOffsetCycle offsetCycle (words xs)
+vigenere key xs = shiftByOffsetCycle offsetCycle xs
   where offsetCycle = mapToOffsetCycle key
 
 -- For every keyword there is a negated keyword that deciphers the
