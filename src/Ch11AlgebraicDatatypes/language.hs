@@ -1,4 +1,4 @@
-module Language where
+module Ch11AlgebraicDatatypes.Language where
 import           Data.Char
 
 capitalizeWord :: String -> String
