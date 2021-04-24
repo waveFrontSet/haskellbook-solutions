@@ -47,9 +47,15 @@ instance Arbitrary (f b a) => Arbitrary (Flip f a b) where
 
 -- 4.
 data EvilGoateeConst a b = GoatyConst b
+  deriving (Eq, Show)
 
 instance Functor (EvilGoateeConst a) where
   fmap f (GoatyConst x) = GoatyConst $ f x
+
+instance Arbitrary b => Arbitrary (EvilGoateeConst a b) where
+  arbitrary = do
+    x <- arbitrary
+    return $ GoatyConst x
 
 -- 5.
 data LiftItOut f a = LiftItOut (f a)
@@ -129,3 +135,5 @@ main = do
   quickCheck (funcCompose :: K Int Int -> Bool)
   quickCheck (functorIdentity :: Flip K String Int -> Bool)
   quickCheck (funcCompose :: Flip K String Int -> Bool)
+  quickCheck (functorIdentity :: EvilGoateeConst Int Int -> Bool)
+  quickCheck (funcCompose :: EvilGoateeConst Int Int -> Bool)
