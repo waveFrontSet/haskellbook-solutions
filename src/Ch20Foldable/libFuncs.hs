@@ -27,3 +27,23 @@ minimum = foldr (fld min) Nothing
 -- 5.
 maximum :: (Foldable t, Ord a) => t a -> Maybe a
 maximum = foldr (fld max) Nothing
+
+-- 6.
+null :: (Foldable t) => t a -> Bool
+null = foldr (const . const False) True
+
+-- 7.
+length :: (Foldable t) => t a -> Int
+length = foldr ((+) . const 1) 0
+
+-- 8.
+toList :: (Foldable t) => t a -> [a]
+toList = foldr (:) []
+
+-- 9.
+fold :: (Foldable t, Monoid m) => t m -> m
+fold = foldMap id
+
+-- 10.
+foldMap' :: (Foldable t, Monoid m) => (a -> m) -> t a -> m
+foldMap' f = foldr ((<>) . f) mempty
