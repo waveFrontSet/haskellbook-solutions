@@ -1,5 +1,7 @@
 module ChapterExercises where
 
+import           Test.Hspec
+
 -- 1.
 data Constant a b = Constant b
   deriving (Eq, Show)
@@ -38,3 +40,11 @@ instance Foldable (Four' a) where
 filterF
   :: (Applicative f, Foldable t, Monoid (f a)) => (a -> Bool) -> t a -> f a
 filterF f = foldMap (\x -> if f x then pure x else mempty)
+
+main :: IO ()
+main = hspec $ do
+  describe "Check filterF" $ do
+    it "filters lists" $ do
+      let xs :: [Integer]
+          xs = [1, 2, 3]
+      (filterF even xs) `shouldBe` [2]
